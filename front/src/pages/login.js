@@ -16,6 +16,14 @@ export default function LoginPage() {
     login(email:"rajppd@yahoo.com", password:"password", device:"web")
   }`
 
+  const queryout = {
+    query: `mutation{
+      logout{
+        name
+      }
+    }`,
+    variables: {},
+  }
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -74,5 +82,25 @@ export default function LoginPage() {
     setmyuser(data.data?.me)
     console.log("Errors", data.errors) //
   }
-  return <button onClick={() => mymain()}>LOGIN</button>
+  async function log__out() {
+    const options = {
+      method: "POST",
+      headers: headers2,
+      body: JSON.stringify(queryout),
+    }
+
+    const response = await fetch(endpoint, options)
+    const data = await response.json()
+    localStorage.removeItem("token")
+    localStorage.removeItem("myuser")
+    console.log("Logout data is:", data?.data.logout.name) // data
+    console.log("Errors", data.errors) //
+  }
+
+  return (
+    <>
+      <button onClick={() => mymain()}>LOGIN</button>
+      <button onClick={() => log__out()}>LOGOUT</button>
+    </>
+  )
 }
