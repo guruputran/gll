@@ -1,0 +1,122 @@
+Ref: https://www.youtube.com/watch?v=ev4-uKserNo&list=PLe30vg_FG4ORwyiMX8qW5tn4jX_0EcpDt&index=15
+https://lighthouse-php.com/6/api-reference/directives.html#where
+Goto http://localhost:8000/graphql-playground
+---------------
+Single user query,
+query {
+  user (id:12){
+    id,
+    name,
+    email
+  }
+}
+-----------------------
+display 12 people in 1 page
+{
+  users(first: 12, page: 1) {
+    data {
+      id
+      name
+    }
+    paginatorInfo {
+      hasMorePages
+      count
+    }
+  }
+}
+-----------------------------
+Create a new user
+mutation {
+  createUser(name: "Rajkumar", email: "rajppd@gmail.com",password:"password") {
+    name
+  }
+}
+----------------------------
+find a user with an email ID
+{
+  userSearchEmail(email:"rajppd@yahoo.com"){
+    name,
+    id,
+    email,
+  }
+}
+-------------------
+Update user
+mutation {
+  updateUser(id: 1, name: "GamaGamma2", email:"gama@yesss.com") {
+    name,
+    email,
+    id
+  }
+}
+--------------------
+delete user
+mutation {
+  deleteUser(id: 2) {
+    name,
+    email,
+    id
+  }
+}
+--------------------------
+Upsert user (updating or inserting), id is mandatory
+mutation {
+  upsertUser(id: 1, name: "GamaGamma2", email:"gama@yesss.com",password:"password") {
+    name,
+    email,
+    id
+  }
+}
+------------------------------------
+Get all posts with author name,id email
+query{
+  posts{
+    title
+    content
+    author{
+      name
+	email
+      id
+    }
+  }
+}
+-----------------------------------------
+login user
+mutation{
+  login(email:"rajppd@yahoo.com", password:"password", device:"web")
+}
+----------------------------
+use token and authenticate
+{
+  me {
+    name
+    email
+    id
+  }
+}
+HTTP HEADERS
+{
+"Accept": "application/json",
+  "Authorization": "Bearer 7|Tt8RbMGsuxowXPMaURSFCsuA7VLgrUNgJtcmj70L"
+}
+--------------------------------
+upload avatar
+Insomnia settings:
+localhost:8000/graphql
+POST selected....
+Use multipart form
+operations	{"query":"mutation FileUpload($file: Upload!){updateUserAvatar(image:$file,id:1){name, avatar}}"}
+0 		SelectFile
+map		{"0":["variables.file"]}
+
+Sample Response:
+{
+	"data": {
+		"updateUserAvatar": {
+			"name": "Carrie",
+			"avatar": "public\/uploads\/T6j89tIw5E9ldXjBTfFy4gp45wuW3d0FbfuVRYVu.png"
+		}
+	}
+}
+File stored at : D:\new-projects\courses\laravel_gql\storage\app\public\uploads
+----------------------------------------

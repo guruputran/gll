@@ -1,0 +1,29 @@
+import React from "react"
+import axios from "axios"
+const { post } = require("superagent")
+export default function LoginPage() {
+  const query = `mutation{
+    login(email:"rajppd@yahoo.com", password:"password", device:"web")
+  }`
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
+  const headers = {
+    "Content-Type": "application/json",
+  }
+  async function mymain() {
+    const { body } = await post("http://localhost:8000/graphql")
+      .set(headers)
+      .send({ query })
+    console.log("body", body)
+    // const { data } = await axios.post(
+    //   "http://localhost:8000/graphql",
+    //   { query },
+    //   config
+    // )
+    // console.log("UL act", data)
+  }
+  return <button onClick={() => mymain()}>LOGIN</button>
+}

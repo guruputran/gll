@@ -1,0 +1,44 @@
+// import React from "react"
+// import { useStaticQuery, graphql } from "gatsby"
+// export default function IndexPage() {
+//   //https://stackoverflow.com/questions/64342324/how-can-i-use-axios-for-fetching-data-in-gatsby-usestaticquery
+//   const data = useStaticQuery(graphql`
+//     query {
+//       allRestApiUsers {
+//         edges {
+//           node {
+//             id
+//             name
+//             phone
+//             email
+//             address {
+//               city
+//             }
+//           }
+//         }
+//       }
+//     }
+//   `)
+//   console.log("mydata", data.allRestApiUsers.edges)
+//   return (
+//     <header>
+//       {data.allRestApiUsers.edges.map((el, index) => {
+//         return <h2 key={index}>{el.node.name}</h2>
+//       })}
+//     </header>
+//   )
+// }
+
+import React from "react"
+import { useUsers } from "../hooks/use-users"
+export default function IndexPage() {
+  const allRestApiUsers = useUsers()
+  console.log("datas", allRestApiUsers)
+  return (
+    <header>
+      {allRestApiUsers.edges.map((el, index) => {
+        return <h2 key={index}>{el.node.name}</h2>
+      })}
+    </header>
+  )
+}
